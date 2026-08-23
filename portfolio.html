@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="shortcut icon" href="./logo.ico" type="image/x-icon">
+<title>Alexey Tenllado León · Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#050810;
+    --bg-alt:#080d18;
+    --panel:rgba(13,20,36,.55);
+    --panel-solid:#0b1120;
+    --border:rgba(96,165,250,.22);
+    --border-strong:rgba(96,165,250,.5);
+    --blue:#3b82f6;
+    --blue-light:#60a5fa;
+    --cyan:#22d3ee;
+    --text:#e7edf7;
+    --text-dim:#9aa8c2;
+    --text-mute:#5f6f8c;
+    --radius:16px;
+    --maxw:1180px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    overflow-x:hidden;
+    position:relative;
+    line-height:1.6;
+  }
+  ::selection{background:var(--blue);color:#fff;}
+  a{color:inherit;text-decoration:none;}
+  ul{list-style:none;}
+  img,svg{display:block;}
+ 
+  h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif;font-weight:600;letter-spacing:-.01em;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+ 
+  #network-bg{
+    position:fixed;
+    inset:0;
+    z-index:0;
+    pointer-events:none;
+  }
+ 
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px;position:relative;z-index:2;}
+ 
+  /* NAV */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    background:rgba(5,8,16,.7);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid rgba(96,165,250,.1);
+    transition:border-color .3s, background .3s;
+  }
+  header.scrolled{background:rgba(5,8,16,.92);border-bottom-color:rgba(96,165,250,.22);}
+  nav{
+    max-width:var(--maxw);margin:0 auto;padding:16px 32px;
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .logo{display:flex;align-items:center;gap:10px;font-family:'Space Grotesk';font-weight:700;letter-spacing:.03em;font-size:15px;}
+  .logo-mark{
+    width:30px;height:30px;border-radius:8px;
+    border:1px solid var(--border-strong);
+    display:flex;align-items:center;justify-content:center;
+    color:var(--blue-light);
+    box-shadow:0 0 14px rgba(59,130,246,.35) inset, 0 0 10px rgba(59,130,246,.2);
+  }
+  .navlinks{display:flex;gap:6px;}
+  .navlinks a{
+    font-size:13.5px;color:var(--text-dim);padding:8px 14px;border-radius:8px;
+    transition:color .25s, background .25s;position:relative;
+  }
+  .navlinks a:hover{color:var(--text);background:rgba(96,165,250,.08);}
+  .navlinks a.active{color:var(--blue-light);}
+  .navlinks a.active::after{
+    content:'';position:absolute;left:14px;right:14px;bottom:2px;height:1px;
+    background:var(--cyan);box-shadow:0 0 6px var(--cyan);
+  }
+  .navtoggle{display:none;background:none;border:1px solid var(--border);border-radius:8px;color:var(--text);width:38px;height:38px;cursor:pointer;}
+ 
+  section{position:relative;z-index:2;padding:120px 0 40px;}
+  .section-head{text-align:center;margin-bottom:56px;}
+  .eyebrow{
+    display:inline-block;font-family:'JetBrains Mono';font-size:11.5px;letter-spacing:.18em;
+    color:var(--cyan);text-transform:uppercase;margin-bottom:14px;
+  }
+  .section-head h2{font-size:clamp(26px,3.4vw,38px);}
+ 
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.2,.6,.2,1), transform .8s cubic-bezier(.2,.6,.2,1);}
+  .reveal.in{opacity:1;transform:translateY(0);}
+  .reveal.d1{transition-delay:.08s;}
+  .reveal.d2{transition-delay:.16s;}
+  .reveal.d3{transition-delay:.24s;}
+  .reveal.d4{transition-delay:.32s;}
+ 
+  /* HERO */
+  .hero{min-height:100vh;display:flex;align-items:center;padding-top:140px;}
+  .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;}
+  .hero-eyebrow{color:var(--text-dim);font-size:16px;margin-bottom:10px;}
+  .hero h1{font-size:clamp(40px,6vw,68px);line-height:1.02;margin-bottom:14px;}
+  .hero h1 .accent{
+    color:var(--blue-light);
+    background:linear-gradient(90deg,var(--blue-light),var(--cyan));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero-role{font-size:clamp(17px,2vw,21px);color:var(--text);margin-bottom:18px;font-weight:500;}
+  .hero-role span{color:var(--cyan);}
+  .hero p.desc{color:var(--text-dim);max-width:460px;margin-bottom:32px;font-size:15.5px;}
+  .btnrow{display:flex;gap:14px;flex-wrap:wrap;}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:13px 24px;border-radius:10px;font-size:14px;font-weight:600;
+    cursor:pointer;border:1px solid transparent;transition:all .25s;
+  }
+  .btn-primary{background:linear-gradient(90deg,var(--blue),var(--cyan));color:#04101f;box-shadow:0 0 22px rgba(59,130,246,.35);}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 28px rgba(34,211,238,.45);}
+  .btn-ghost{border-color:var(--border);color:var(--text);}
+  .btn-ghost:hover{border-color:var(--border-strong);background:rgba(96,165,250,.08);transform:translateY(-2px);}
+ 
+  .avatar-wrap{position:relative;display:flex;align-items:center;justify-content:center;}
+  .avatar-ring{
+    width:min(340px,80vw);height:min(340px,80vw);border-radius:50%;
+    border:1px solid var(--border-strong);position:relative;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 0 60px rgba(59,130,246,.18) inset, 0 0 60px rgba(34,211,238,.08);
+  }
+  .avatar-ring::before{
+    content:'';position:absolute;inset:-14px;border-radius:50%;
+    border:1px dashed rgba(96,165,250,.25);
+    animation:spin 40s linear infinite;
+  }
+  .avatar-ring::after{
+    content:'';position:absolute;inset:-30px;border-radius:50%;
+    border:1px solid rgba(34,211,238,.12);
+    animation:spin 60s linear infinite reverse;
+  }
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .avatar-icon{width:44%;height:44%;color:var(--blue-light);opacity:.85;}
+  .avatar-photo{
+    display:block;
+    width:calc(100% - 20px);height:calc(100% - 20px);
+    aspect-ratio:1/1;
+    border-radius:50%;
+    object-fit:cover;object-position:center;
+    box-shadow:0 0 40px rgba(59,130,246,.25);
+  }
+  .scrolldown{
+    position:absolute;bottom:18px;left:50%;transform:translateX(-50%);
+    color:var(--text-mute);animation:bob 2.2s ease-in-out infinite;
+  }
+  @keyframes bob{0%,100%{transform:translate(-50%,0);}50%{transform:translate(-50%,8px);}}
+ 
+  /* PANEL */
+  .panel{
+    background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+    backdrop-filter:blur(6px);
+    position:relative;
+  }
+  .panel-corner{position:absolute;width:16px;height:16px;border-color:var(--border-strong);opacity:.7;}
+  .panel-corner.tl{top:-1px;left:-1px;border-top:2px solid;border-left:2px solid;border-top-left-radius:6px;}
+  .panel-corner.br{bottom:-1px;right:-1px;border-bottom:2px solid;border-right:2px solid;border-bottom-right-radius:6px;}
+ 
+  /* SOBRE MI */
+  .about-grid{display:grid;grid-template-columns:1fr 1.3fr;gap:0;padding:38px;align-items:center;}
+  .about-left h3{font-size:26px;margin-bottom:14px;}
+  .about-left p{color:var(--text-dim);font-size:14.5px;margin-bottom:20px;}
+  .link-arrow{color:var(--blue-light);font-size:13.5px;font-weight:600;display:inline-flex;align-items:center;gap:6px;}
+  .link-arrow svg{width:14px;height:14px;transition:transform .25s;}
+  .link-arrow:hover svg{transform:translate(3px,-3px);}
+  .info-box{
+    background:var(--panel-solid);border:1px solid var(--border);border-radius:12px;
+    padding:26px;display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-left:20px;
+  }
+  .info-item{display:flex;gap:12px;}
+  .info-icon{
+    width:38px;height:38px;flex:none;border-radius:9px;background:rgba(59,130,246,.1);
+    border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--cyan);
+  }
+  .info-icon svg{width:18px;height:18px;}
+  .info-item h4{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-mute);margin-bottom:4px;font-family:'JetBrains Mono';font-weight:500;}
+  .info-item p{font-size:14.5px;color:var(--text);}
+  @media (max-width:820px){.about-grid{grid-template-columns:1fr;}.info-box{margin-left:0;margin-top:26px;grid-template-columns:1fr 1fr;}}
+  @media (max-width:520px){.info-box{grid-template-columns:1fr;}}
+ 
+  /* SKILLS */
+  .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px;}
+  .skill-card{padding:26px;transition:transform .3s, border-color .3s, box-shadow .3s;}
+  .skill-card:hover{transform:translateY(-6px);border-color:var(--border-strong);box-shadow:0 12px 32px rgba(0,0,0,.4);}
+  .skill-icon{
+    width:46px;height:46px;border-radius:11px;background:rgba(34,211,238,.08);
+    border:1px solid var(--border);display:flex;align-items:center;justify-content:center;
+    color:var(--cyan);margin-bottom:16px;
+  }
+  .skill-icon svg{width:22px;height:22px;}
+  .skill-card h4{font-size:16px;margin-bottom:18px;}
+ 
+  /* Filas de nivel: nombre + etiqueta (Avanzado/Intermedio...) + barra segmentada */
+  .skillbar-row{margin-bottom:14px;}
+  .skillbar-row:last-child{margin-bottom:0;}
+  .skillbar-top{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:7px;}
+  .skillbar-top span:first-child{font-size:13.5px;color:var(--text);}
+  .skillbar-top .level-label{font-size:10px;font-family:'JetBrains Mono';letter-spacing:.03em;color:var(--text-mute);white-space:nowrap;}
+  .level-bar{display:flex;gap:4px;}
+  .level-bar i{
+    flex:1;height:5px;border-radius:3px;background:rgba(255,255,255,.07);list-style:none;font-style:normal;
+    position:relative;overflow:hidden;
+  }
+  .level-bar i::after{
+    content:'';position:absolute;inset:0;border-radius:3px;
+    background:linear-gradient(90deg,var(--blue),var(--cyan));
+    transform:scaleX(0);transform-origin:left;transition:transform .8s cubic-bezier(.2,.7,.2,1);
+  }
+  .level-bar i.filled::after{transform:scaleX(1);}
+ 
+  /* "También trabajo con" */
+  .also-panel{padding:32px 34px;margin-top:22px;}
+  .also-panel h4{font-size:14px;color:var(--text);margin-bottom:6px;}
+  .also-panel .also-sub{font-size:12.5px;color:var(--text-mute);margin-bottom:18px;}
+  .also-tags{display:flex;flex-wrap:wrap;gap:9px;}
+  .also-tag{
+    font-size:12px;font-family:'JetBrains Mono';padding:7px 13px;border-radius:20px;
+    border:1px solid var(--border);color:var(--text-dim);background:var(--panel-solid);
+    transition:all .25s;
+  }
+  .also-tag:hover{border-color:var(--border-strong);color:var(--blue-light);transform:translateY(-2px);}
+ 
+  /* PROYECTOS */
+  .proj-outer{position:relative;padding:36px;}
+  .proj-track{display:flex;gap:22px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px;scrollbar-width:none;}
+  .proj-track::-webkit-scrollbar{display:none;}
+  .proj-card{
+    flex:0 0 min(320px,82vw);scroll-snap-align:start;
+    background:var(--panel-solid);border:1px solid var(--border);border-radius:12px;overflow:hidden;
+    transition:transform .3s, border-color .3s, box-shadow .3s;
+  }
+  .proj-card:hover{transform:translateY(-6px);border-color:var(--border-strong);box-shadow:0 14px 34px rgba(0,0,0,.45);}
+  .proj-thumb{
+    height:150px;background:linear-gradient(135deg,#0e1930,#0a1120);
+    display:flex;align-items:center;justify-content:center;color:var(--text-mute);
+    border-bottom:1px solid var(--border);
+  }
+  .proj-thumb svg{width:34px;height:34px;}
+  .proj-body{padding:20px;}
+  .proj-body h4{font-size:15.5px;margin-bottom:8px;}
+  .proj-body p{font-size:13px;color:var(--text-dim);margin-bottom:14px;min-height:52px;}
+  .tag-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+  .tag{font-size:10.5px;font-family:'JetBrains Mono';padding:4px 9px;border-radius:6px;border:1px solid var(--border);color:var(--blue-light);background:rgba(59,130,246,.06);}
+  .proj-arrows{display:flex;justify-content:center;gap:12px;margin-top:22px;}
+  .arrow-btn{
+    width:38px;height:38px;border-radius:50%;border:1px solid var(--border);background:transparent;
+    color:var(--text-dim);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .25s;
+  }
+  .arrow-btn:hover{border-color:var(--border-strong);color:var(--cyan);background:rgba(34,211,238,.06);}
+  .arrow-btn svg{width:16px;height:16px;}
+  .view-all{text-align:center;margin-top:22px;}
+ 
+  /* EXPERIENCIA */
+  .exp-track{display:grid;grid-template-columns:repeat(3,1fr);gap:0;padding:36px;position:relative;}
+  @media (max-width:820px){.exp-track{grid-template-columns:1fr;gap:36px;}}
+  .exp-item{padding:0 20px;position:relative;}
+  .exp-item::before{
+    content:'';position:absolute;top:-20px;left:20px;right:20px;height:1px;background:var(--border);
+  }
+  @media (max-width:820px){.exp-item::before{display:none;}}
+  .exp-dot{
+    width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--cyan);
+    box-shadow:0 0 10px var(--cyan);position:absolute;top:-26px;left:20px;
+  }
+  @media (max-width:820px){.exp-dot{display:none;}}
+  .exp-date{font-family:'JetBrains Mono';font-size:11.5px;color:var(--cyan);margin-bottom:8px;}
+  .exp-item h4{font-size:16.5px;margin-bottom:4px;}
+  .exp-item .org{font-size:13px;color:var(--text-dim);margin-bottom:10px;}
+  .exp-item p{font-size:13.5px;color:var(--text-mute);}
+ 
+  /* MAS SOBRE MI — mapa de intereses */
+  .interest-map{padding:40px;}
+  .map-intro{max-width:520px;margin-bottom:36px;}
+  .map-intro h3{font-size:26px;margin-bottom:10px;}
+  .map-intro p{font-size:13.5px;color:var(--text-dim);}
+  .map-path{position:relative;}
+  .map-point{position:relative;padding-left:64px;padding-bottom:34px;}
+  .map-point:last-child{padding-bottom:0;}
+  .map-point::before{
+    content:'';position:absolute;left:23px;top:48px;bottom:0;width:1px;
+    background:linear-gradient(var(--border-strong), rgba(96,165,250,.08));
+  }
+  .map-point:last-child::before{display:none;}
+  .map-node{
+    position:absolute;left:0;top:0;width:48px;height:48px;border-radius:14px;
+    background:rgba(59,130,246,.08);border:1px solid var(--border);
+    display:flex;align-items:center;justify-content:center;color:var(--blue-light);
+    transition:all .3s;z-index:2;
+  }
+  .map-node svg{width:22px;height:22px;}
+  .map-point.open .map-node{
+    background:rgba(34,211,238,.14);border-color:var(--cyan);color:var(--cyan);
+    box-shadow:0 0 18px rgba(34,211,238,.3);
+  }
+  .map-index{
+    position:absolute;top:-6px;right:-6px;width:18px;height:18px;border-radius:50%;
+    background:var(--bg);border:1px solid var(--border-strong);color:var(--cyan);
+    font-family:'JetBrains Mono';font-size:9.5px;display:flex;align-items:center;justify-content:center;
+  }
+  .map-toggle{
+    display:flex;align-items:center;gap:14px;width:100%;background:none;border:none;
+    cursor:pointer;text-align:left;color:inherit;font-family:inherit;padding:10px 0;
+  }
+  .map-toggle-text{flex:1;}
+  .map-toggle-text h4{font-size:16px;margin-bottom:3px;}
+  .map-toggle-text span{font-size:11.5px;font-family:'JetBrains Mono';color:var(--text-mute);letter-spacing:.03em;}
+  .map-chevron{flex:none;color:var(--text-mute);transition:transform .3s, color .3s;}
+  .map-chevron svg{width:16px;height:16px;}
+  .map-point.open .map-chevron{transform:rotate(180deg);color:var(--cyan);}
+  .map-body{max-height:0;opacity:0;overflow:hidden;transition:max-height .45s cubic-bezier(.2,.7,.2,1), opacity .3s ease;}
+  .map-point.open .map-body{max-height:160px;opacity:1;}
+  .map-body p{font-size:13.5px;color:var(--text-dim);padding:0 0 4px;max-width:480px;}
+  .map-point:hover .map-node{border-color:var(--border-strong);}
+ 
+  /* PROYECTO ALEXEYTECHSEC */
+  .social-project{
+    grid-column:1 / -1;
+    margin-top:8px;
+    padding:34px 40px 38px;
+    border-top:1px solid var(--border);
+  }
+  .social-project-desc{color:var(--text-dim);font-size:14.5px;max-width:520px;margin-top:10px;}
+  .social-project-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center;margin-top:26px;}
+  @media (max-width:900px){.social-project-grid{grid-template-columns:1fr;}}
+ 
+  .social-highlights{display:flex;flex-direction:column;gap:11px;margin:22px 0 26px;max-width:480px;}
+  .social-highlights li{display:flex;align-items:flex-start;gap:10px;font-size:13.5px;color:var(--text-dim);}
+  .social-highlights li svg{width:16px;height:16px;color:var(--cyan);flex:none;margin-top:2px;}
+ 
+  .social-mini{
+    display:inline-flex;align-items:center;gap:10px;padding:11px 18px;border-radius:11px;
+    border:1px solid var(--border);background:var(--panel-solid);color:var(--text-dim);
+    font-size:13px;font-weight:600;transition:all .25s;
+  }
+  .social-mini:hover{border-color:var(--border-strong);color:var(--blue-light);transform:translateY(-3px);box-shadow:0 10px 24px rgba(0,0,0,.35);}
+  .social-mini-icon{width:19px;height:19px;flex:none;color:var(--cyan);display:flex;}
+  .social-mini-icon svg{width:100%;height:100%;}
+ 
+  /* Mockup tipo "monitor" con las redes sociales */
+  .device-mockup{position:relative;display:flex;flex-direction:column;align-items:center;}
+  .device-mockup::before{
+    content:'';position:absolute;top:10%;left:50%;transform:translateX(-50%);
+    width:80%;height:70%;background:radial-gradient(circle, rgba(34,211,238,.16), transparent 70%);
+    filter:blur(20px);z-index:0;
+  }
+  .device-screen{
+    position:relative;z-index:1;width:100%;max-width:420px;border-radius:14px;
+    border:1px solid var(--border-strong);background:var(--panel-solid);
+    box-shadow:0 0 50px rgba(59,130,246,.16), 0 24px 50px rgba(0,0,0,.5);
+    overflow:hidden;
+  }
+  .device-bar{display:flex;align-items:center;gap:7px;padding:12px 16px;border-bottom:1px solid var(--border);background:rgba(255,255,255,.02);}
+  .device-dot{width:8px;height:8px;border-radius:50%;background:#ef4444;opacity:.55;}
+  .device-dot:nth-child(2){background:#f59e0b;}
+  .device-dot:nth-child(3){background:#22c55e;}
+  .device-url{
+    margin-left:8px;font-family:'JetBrains Mono';font-size:10.5px;color:var(--text-mute);
+    background:rgba(255,255,255,.03);border:1px solid var(--border);padding:4px 10px;border-radius:6px;flex:1;
+  }
+  .device-content{padding:18px;display:flex;flex-direction:column;gap:10px;}
+  .device-row{
+    display:flex;align-items:center;gap:12px;padding:13px 14px;border-radius:10px;
+    border:1px solid var(--border);background:rgba(255,255,255,.02);transition:all .25s;
+  }
+  .device-row:hover{border-color:var(--border-strong);background:rgba(96,165,250,.07);transform:translateX(4px);}
+  .device-row-icon{
+    width:34px;height:34px;flex:none;border-radius:9px;background:rgba(34,211,238,.1);
+    border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--cyan);
+  }
+  .device-row-icon svg{width:16px;height:16px;}
+  .device-row-text{flex:1;min-width:0;}
+  .device-row-text strong{display:block;font-size:13px;color:var(--text);}
+  .device-row-text span{font-size:11px;color:var(--text-mute);font-family:'JetBrains Mono';}
+  .device-row-arrow{color:var(--text-mute);flex:none;transition:transform .25s, color .25s;}
+  .device-row-arrow svg{width:14px;height:14px;}
+  .device-row:hover .device-row-arrow{color:var(--cyan);transform:translate(2px,-2px);}
+  .device-stand{
+    position:relative;z-index:1;width:64px;height:18px;background:linear-gradient(var(--panel-solid), #060a14);
+    border:1px solid var(--border);border-top:none;border-radius:0 0 8px 8px;margin-top:-1px;
+  }
+  .device-base{position:relative;z-index:1;width:150px;height:7px;background:#060a14;border:1px solid var(--border);border-radius:6px;margin-top:6px;}
+ 
+  /* CONTACTO */
+  .contact-wrap{text-align:center;max-width:640px;margin:0 auto;padding:50px 32px;}
+  .contact-wrap p{color:var(--text-dim);margin:14px auto 30px;max-width:440px;}
+  .social-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;max-width:520px;margin:0 auto;}
+  .social-grid a:last-child:nth-child(odd){grid-column:1 / -1;max-width:calc(50% - 7px);margin:0 auto;}
+  @media (max-width:520px){.social-grid{grid-template-columns:1fr;}.social-grid a:last-child:nth-child(odd){max-width:100%;}}
+  .social-card{
+    display:flex;align-items:center;gap:12px;padding:16px;border-radius:12px;
+    border:1px solid var(--border);background:var(--panel-solid);transition:all .25s;text-align:left;
+  }
+  .social-card:hover{border-color:var(--border-strong);transform:translateY(-4px);box-shadow:0 10px 26px rgba(0,0,0,.4);}
+  .social-icon{width:36px;height:36px;flex:none;border-radius:9px;background:rgba(96,165,250,.1);display:flex;align-items:center;justify-content:center;color:var(--blue-light);}
+  .social-icon svg{width:17px;height:17px;}
+  .social-card h5{font-size:13.5px;margin-bottom:2px;}
+  .social-card span{font-size:12px;color:var(--text-mute);}
+ 
+  footer{
+    position:relative;z-index:2;text-align:center;padding:30px 20px;color:var(--text-mute);
+    font-size:12.5px;border-top:1px solid rgba(96,165,250,.1);margin-top:40px;
+  }
+  footer .logo{justify-content:center;margin-bottom:8px;}
+  .heart{color:#ef4444;}
+ 
+  @media (max-width:1200px){.wrap{padding:0 24px;}}
+  @media (max-width:860px){
+    .navlinks{display:none;}
+    .navtoggle{display:flex;align-items:center;justify-content:center;}
+    section{padding:90px 0 30px;}
+    .hero{padding-top:110px;}
+    .hero-grid{grid-template-columns:1fr;text-align:center;gap:36px;}
+    .hero p.desc{margin-left:auto;margin-right:auto;}
+    .btnrow{justify-content:center;}
+    .avatar-wrap{order:-1;margin-bottom:0;}
+    .avatar-ring{width:min(240px,68vw);height:min(240px,68vw);}
+    .about-grid{padding:28px 22px;}
+    .interest-map{padding:28px 22px;}
+    .social-project{padding:28px 22px 32px;}
+    .info-box{padding:20px;}
+    .proj-outer{padding:24px 18px;}
+    .section-head{margin-bottom:36px;}
+  }
+  @media (max-width:520px){
+    .wrap{padding:0 18px;}
+    nav{padding:14px 18px;}
+    .logo{font-size:13px;}
+    .btn{padding:12px 18px;font-size:13px;}
+    .info-item{flex-direction:column;}
+    .exp-item{padding:0 4px;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.001ms !important; transition-duration:.001ms !important;}
+  }
+</style>
+</head>
+<body>
+ 
+<canvas id="network-bg"></canvas>
+ 
+<header id="siteHeader">
+  <nav>
+    <div class="logo"><span class="logo-mark">>_</span>AlexeyTechSec</div>
+    <div class="navlinks" id="navlinks">
+      <a href="#inicio">Inicio</a>
+      <a href="#sobre-mi">Sobre mí</a>
+      <a href="#skills">Skills</a>
+      <a href="#proyectos">Proyectos</a>
+      <a href="#experiencia">Experiencia</a>
+      <a href="#contacto">Contacto</a>
+    </div>
+    <button class="navtoggle" id="navToggle" aria-label="Abrir menú">☰</button>
+  </nav>
+</header>
+ 
+<main>
+ 
+  <!-- INICIO -->
+  <section id="inicio" class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="hero-eyebrow reveal in">Hola, soy</p>
+        <h1 class="reveal in d1">Alexey<span class="accent">Tenllado León</span></h1>
+        <p class="hero-role reveal in d2">Desarrollador &amp; Especialista en <span>Ciberseguridad</span></p>
+        <p class="desc reveal in d3">Apasionado por la tecnología, la seguridad y la creación de soluciones que marcan la diferencia.</p>
+        <div class="btnrow reveal in d4">
+          <a href="#proyectos" class="btn btn-primary">Ver mis proyectos
+            <svg viewBox="0 0 24 24" fill="none" width="15" height="15"><path d="M7 17L17 7M17 7H8M17 7V16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="avatar-wrap reveal in d2">
+        <div class="avatar-ring">
+          <!-- Sustituye "tu-foto.jpg" por el nombre de tu archivo de imagen,
+               guardado en la misma carpeta que este HTML -->
+          <img class="avatar-photo" src="./multimedia_perfil/Alexey.png" alt="foto_perfil"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <svg class="avatar-icon" viewBox="0 0 24 24" fill="none" style="display:none;"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="currentColor" stroke-width="1.4"/></svg>
+        </div>
+      </div>
+    </div>
+    <div class="scrolldown">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+  </section>
+ 
+  <!-- SOBRE MI -->
+  <section id="sobre-mi">
+    <div class="wrap">
+      <div class="panel reveal">
+        <span class="panel-corner tl"></span><span class="panel-corner br"></span>
+        <div class="about-grid">
+          <div class="about-left">
+            <p class="eyebrow" style="text-align:left">Sobre mí</p>
+            <h3>Conoce más sobre mí</h3>
+            <p style="text-align: justify;">Soy una persona curiosa, creativa y apasionada por la tecnología, especialmente por la programación, la ciberseguridad y el desarrollo de proyectos propios. Me gusta aprender haciendo, experimentar con nuevas ideas y convertirlas en proyectos reales, combinando tecnología y creatividad. Mi objetivo es seguir creciendo, explorar nuevos retos y crear soluciones que aporten valor.</p>
+          </div>
+          <div class="info-box">
+            <div class="info-item">
+              <div class="info-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 22s7-6.5 7-12a7 7 0 10-14 0c0 5.5 7 12 7 12z" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="10" r="2.5" stroke="currentColor" stroke-width="1.5"/></svg></div>
+              <div><h4>Ubicación</h4><p>Sant Fost de Campsentelles, Cataluña, España</p></div>
+            </div>
+            <div class="info-item">
+              <div class="info-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M12 7v5l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+              <div><h4>Disponibilidad</h4><p>Abierto a nuevos proyectos</p></div>
+            </div>
+            <div class="info-item">
+              <div class="info-icon"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="7" width="18" height="13" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2" stroke="currentColor" stroke-width="1.5"/></svg></div>
+              <div><h4>Experiencia</h4><p>2 años</p></div>
+            </div>
+            <div class="info-item">
+              <div class="info-icon"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 6 9-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+              <div><h4>Email</h4><p>contactalexeytenllado@gmail.com</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">Mis skills</p>
+        <h2>Tecnologías &amp; Herramientas</h2>
+      </div>
+      <div class="skills-grid">
+        <!-- Programación -->
+        <div class="panel skill-card reveal d1">
+          <div class="skill-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M8 8l-4 4 4 4M16 8l4 4-4 4M14 4l-4 16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h4>💻 Programación</h4>
+          <div class="skillbar-row" data-level="5"><div class="skillbar-top"><span>Python</span><span class="level-label">Avanzado</span></div><div class="level-bar"><i></i><i></i><i></i><i></i><i></i></div></div>
+          <div class="skillbar-row" data-level="4"><div class="skillbar-top"><span>Shell / Bash</span><span class="level-label">Intermedio-Avanzado</span></div><div class="level-bar"><i></i><i></i><i></i><i></i><i></i></div></div>
+          <div class="skillbar-row" data-level="3"><div class="skillbar-top"><span>SQL</span><span class="level-label">Intermedio</span></div><div class="level-bar"><i></i><i></i><i></i><i></i><i></i></div></div>
+          <div class="skillbar-row" data-level="2"><div class="skillbar-top"><span>Java</span><span class="level-label">Intermedio-Bajo</span></div><div class="level-bar"><i></i><i></i><i></i><i></i><i></i></div></div>
+          <div class="skillbar-row" data-level="2"><div class="skillbar-top"><span>JavaScript</span><span class="level-label">Intermedio-Bajo</span></div><div class="level-bar"><i></i><i></i><i></i><i></i><i></i></div></div>
+        </div>
+        <!-- Desarrollo Web -->
+        <div class="panel skill-card reveal d2">
+          <div class="skill-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M3 12h18M12 3a13 13 0 010 18M12 3a13 13 0 000 18" stroke="currentColor" stroke-width="1.6"/></svg></div>
+          <h4>🌐 Desarrollo Web</h4>
+          <div class="skillbar-row" data-level="5"><div class="skillbar-top"><span>HTML5 / CSS3</span><span class="level-label">Avanzado</span></div><div class="level-bar"><i></i><i></i><i></i><i></i><i></i></div></div>
+          <div class="skillbar-row" data-level="4"><div class="skillbar-top"><span>Dominios & DNS</span><span class="level-label">Intermedio</span></div><div class="level-bar"><i></i><i></i><i></i><i></i><i></i></div></div>
+          <div class="skillbar-row" data-level="3"><div class="skillbar-top"><span>Integración de APIs</span><span class="level-label">Intermedio</span></div><div class="level-bar"><i></i><i></i><i></i><i></i><i></i></div></div>
+          <div class="skillbar-row" data-level="3"><div class="skillbar-top"><span>Wordpress</span><span class="level-label">Intermedio</span></div><div class="level-bar"><i></i><i></i><i></i><i></i><i></i></div></div>
+          <div class="skillbar-row" data-level="3"><div class="skillbar-top"><span>GitHub Pages</span><span class="level-label">Intermedio</span></div><div class="level-bar"><i></i><i></i><i></i><i></i><i></i></div></div>
+        </div>
+        <!-- Ciberseguridad -->
+        <div class="panel skill-card reveal d3">
+          <div class="skill-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v6c0 5-3.4 8.4-7 9-3.6-.6-7-4-7-9V6l7-3z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
+          <h4>🛡️ Ciberseguridad</h4>
+          <div class="skillbar-row" data-level="4"><div class="skillbar-top"><span>Seguridad redes</span><span class="level-label">Intermedio-Avanzado</span></div><div class="level-bar"><i></i><i></i><i></i><i></i><i></i></div></div>
+          <div class="skillbar-row" data-level="4"><div class="skillbar-top"><span>Pentesting</span><span class="level-label">Intermedio-Avanzado</span></div><div class="level-bar"><i></i><i></i><i></i><i></i><i></i></div></div>
+          <div class="skillbar-row" data-level="3"><div class="skillbar-top"><span>Reconocimiento y OSINT</span><span class="level-label">Intermedio</span></div><div class="level-bar"><i></i><i></i><i></i><i></i><i></i></div></div>
+          <div class="skillbar-row" data-level="3"><div class="skillbar-top"><span>Pentesting</span><span class="level-label">Intermedio</span></div><div class="level-bar"><i></i><i></i><i></i><i></i><i></i></div></div>
+          <div class="skillbar-row" data-level="3"><div class="skillbar-top"><span>Análisis de vulnerabilidades</span><span class="level-label">Intermedio</span></div><div class="level-bar"><i></i><i></i><i></i><i></i><i></i></div></div>
+          <div class="skillbar-row" data-level="2"><div class="skillbar-top"><span>Redes</span><span class="level-label">Intermedio-Avanzado</span></div><div class="level-bar"><i></i><i></i><i></i><i></i><i></i></div></div>
+        </div>
+        <!-- Herramientas -->
+        <div class="panel skill-card reveal d1">
+          <div class="skill-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 17l6-6-6-6M12 19h8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h4>🔧 Herramientas</h4>
+          <div class="skillbar-row" data-level="4"><div class="skillbar-top"><span>Git / GitHub</span><span class="level-label">Intermedio-Avanzado</span></div><div class="level-bar"><i></i><i></i><i></i><i></i><i></i></div></div>
+          <div class="skillbar-row" data-level="4"><div class="skillbar-top"><span>VS Code</span><span class="level-label">Intermedio-Avanzado</span></div><div class="level-bar"><i></i><i></i><i></i><i></i><i></i></div></div>
+          <div class="skillbar-row" data-level="3"><div class="skillbar-top"><span>Sophos</span><span class="level-label">Intermedio</span></div><div class="level-bar"><i></i><i></i><i></i><i></i><i></i></div></div>
+          <div class="skillbar-row" data-level="3"><div class="skillbar-top"><span>Wireshark</span><span class="level-label">Intermedio</span></div><div class="level-bar"><i></i><i></i><i></i><i></i><i></i></div></div>
+          <div class="skillbar-row" data-level="3"><div class="skillbar-top"><span>Kali Linux</span><span class="level-label">Intermedio</span></div><div class="level-bar"><i></i><i></i><i></i><i></i><i></i></div></div>
+          <div class="skillbar-row" data-level="3"><div class="skillbar-top"><span>Nmap</span><span class="level-label">Intermedio</span></div><div class="level-bar"><i></i><i></i><i></i><i></i><i></i></div></div>
+          <div class="skillbar-row" data-level="3"><div class="skillbar-top"><span>Shodan</span><span class="level-label">Intermedio</span></div><div class="level-bar"><i></i><i></i><i></i><i></i><i></i></div></div>
+          <div class="skillbar-row" data-level="3"><div class="skillbar-top"><span>Microsoft 365</span><span class="level-label">Intermedio</span></div><div class="level-bar"><i></i><i></i><i></i><i></i><i></i></div></div>
+          <div class="skillbar-row" data-level="3"><div class="skillbar-top"><span>Microsoft Entra ID</span><span class="level-label">Intermedio</span></div><div class="level-bar"><i></i><i></i><i></i><i></i><i></i></div></div>
+          <div class="skillbar-row" data-level="3"><div class="skillbar-top"><span>NinjaOne</span><span class="level-label">Intermedio</span></div><div class="level-bar"><i></i><i></i><i></i><i></i><i></i></div></div>
+          <div class="skillbar-row" data-level="3"><div class="skillbar-top"><span>Microsoft Defender</span><span class="level-label">Intermedio</span></div><div class="level-bar"><i></i><i></i><i></i><i></i><i></i></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- PROYECTOS -->
+  <section id="proyectos">
+    <div class="wrap">
+      <div class="panel reveal">
+        <span class="panel-corner tl"></span><span class="panel-corner br"></span>
+        <div class="proj-outer">
+          <div class="section-head" style="margin-bottom:28px;">
+            <p class="eyebrow">Proyectos destacados</p>
+            <h2>Algunos de mis proyectos</h2>
+          </div>
+          <div class="proj-track" id="projTrack">
+            <div class="proj-card">
+              <div class="proj-thumb"><img src="./proyectos/Scanpa.png" alt="Captura del proyecto" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"><svg viewBox="0 0 24 24" fill="none" style="display:none;"><rect x="3" y="4" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M3 15l5-5 4 4 4-3 5 4" stroke="currentColor" stroke-width="1.4"/></svg></div>
+              <div class="proj-body">
+                <h4>Scanpa</h4>
+                <p style="text-align: justify;">ScanPa es una herramienta desarrollada en Python para el escaneo y monitorización de redes WiFi, capaz de detectar redes cercanas y mostrar información relevante como SSID, BSSID, fabricante, canal, señal y calidad de conexión en tiempo real.</p>
+                <div class="tag-row"><span class="tag">Python</span><span class="tag">ESP32</span><span class="tag">MicroPython</span></div>
+                <a href="https://github.com/ContactAlexey/ScanPa" class="link-arrow">Ver proyecto <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H8M17 7V16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              </div>
+            </div>
+            <div class="proj-card">
+              <div class="proj-thumb"><img src="./proyectos/sentinel.png" alt="Captura del proyecto" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"><svg viewBox="0 0 24 24" fill="none" style="display:none;"><rect x="3" y="4" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M3 15l5-5 4 4 4-3 5 4" stroke="currentColor" stroke-width="1.4"/></svg></div>
+              <div class="proj-body">
+                <h4>SentinelSec</h4>
+                <p style="text-align: justify;">SentinelSec es un juego educativo de ciberseguridad que simula un entorno SOC (Security Operations Center), donde el jugador debe analizar incidentes, identificar amenazas y tomar decisiones para mejorar sus habilidades de detección y respuesta ante ataques.</p>
+                <div class="tag-row"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JAAVASCRIPT</span></div>
+                <a href="https://contactalexey.github.io/SentinelSec/" class="link-arrow">Ver proyecto <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H8M17 7V16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              </div>
+            </div>
+            <div class="proj-card">
+              <div class="proj-thumb"><img src="./proyectos/TTLSCAN.png" alt="Captura del proyecto" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"><svg viewBox="0 0 24 24" fill="none" style="display:none;"><rect x="3" y="4" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M3 15l5-5 4 4 4-3 5 4" stroke="currentColor" stroke-width="1.4"/></svg></div>
+              <div class="proj-body">
+                <h4>TTLSCAN</h4>
+                <p style="text-align: justify;">TTLScan es una herramienta ligera desarrollada en Python para el análisis de TTL y diagnóstico de redes. Permite analizar dominios o IPs, estimar saltos y distancia de red, detectar posibles NAT, VPN, proxies o túneles y generar un informe técnico con posibles anomalías y señales de seguridad.</p>
+                <div class="tag-row"><span class="tag">Python</span><span class="tag">Bash/Shell</span><span class="tag">TCP/IP</span></div>
+                <a href="https://github.com/ContactAlexey/ttlscan" class="link-arrow">Ver proyecto <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H8M17 7V16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- EXPERIENCIA -->
+      <section id="experiencia">
+        <div class="wrap">
+          <div class="panel reveal">
+            <span class="panel-corner tl"></span><span class="panel-corner br"></span>
+ 
+            <div class="section-head" style="padding-top:36px;margin-bottom:10px;">
+              <p class="eyebrow">Experiencia</p>
+              <h2>Mi trayectoria</h2>
+            </div>
+ 
+            <div class="exp-track">
+ 
+              <!-- ACTUALIDAD -->
+              <div class="exp-item">
+                <span class="exp-dot"></span>
+                <p class="exp-date">2026 — Actualidad</p>
+                <h4>Soporte Técnico / Helpdesk</h4>
+                <p class="org">Soluciones en Ciberseguridad, IT y Marketing Digital | Asnet</p>
+                <p>
+                  Gestión y resolución de incidencias técnicas, realizando un seguimiento
+                  de los tickets y proporcionando soporte a los usuarios. 
+                </p>
+              </div>
+ 
+              <!-- CONTRATADO -->
+              <div class="exp-item">
+                <span class="exp-dot"></span>
+                <p class="exp-date">2025</p>
+                <h4>Soporte Técnico / Helpdesk</h4>
+                <p class="org">Soluciones en Ciberseguridad, IT y Marketing Digital | Asnet</p>
+                <p>
+                  Soporte técnico a usuarios mediante la gestión de tickets e incidencias,
+                  realizando diagnóstico, seguimiento y resolución de problemas.
+                  Experiencia desarrollada ya como parte del equipo contratado.
+                </p>
+              </div>
+ 
+              <!-- PRÁCTICAS -->
+              <div class="exp-item">
+                <span class="exp-dot"></span>
+                <p class="exp-date">2024 — 2025</p>
+                <h4>Soporte Técnico / Prácticas</h4>
+                <p class="org">Soluciones en Ciberseguridad, IT y Marketing Digital | Asnet</p>
+                <p>
+                  Inicio de mi trayectoria profesional en soporte técnico, participando
+                  en la apertura, clasificación y gestión de tickets, así como en la
+                  atención y seguimiento de incidencias de los usuarios.
+                </p>
+              </div>
+ 
+            </div>
+ 
+            <div style="height:36px;"></div>
+          </div>
+        </div>
+      </section>
+ 
+  <!-- MAS SOBRE MI -->
+  <section id="mas-sobre-mi">
+    <div class="wrap">
+      <div class="panel reveal">
+        <span class="panel-corner tl"></span><span class="panel-corner br"></span>
+        <div class="interest-map">
+          <div class="map-intro">
+            <p class="eyebrow">Más sobre mí</p>
+            <h3>Intereses &amp; Valores</h3>
+            <p>Un pequeño mapa de lo que me mueve. Toca cada punto para saber más.</p>
+          </div>
+ 
+          <div class="map-path">
+            <div class="map-point reveal d1" data-map-point>
+              <div class="map-node">
+                <span class="map-index">1</span>
+                <svg viewBox="0 0 24 24" fill="none"><path d="M12 4l8 4-8 4-8-4 8-4z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M4 12l8 4 8-4M4 16l8 4 8-4" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+              </div>
+              <button type="button" class="map-toggle">
+                <span class="map-toggle-text">
+                  <h4>Aprendizaje constante</h4>
+                  <span>Curiosidad &amp; crecimiento</span>
+                </span>
+                <span class="map-chevron"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </button>
+              <div class="map-body">
+                <p>Siempre explorando nuevas tecnologías y retos que me hagan crecer.</p>
+              </div>
+            </div>
+ 
+            <div class="map-point reveal d2" data-map-point>
+              <div class="map-node">
+                <span class="map-index">2</span>
+                <svg viewBox="0 0 24 24" fill="none"><path d="M9 3v3M15 3v3M4 9h16M6 6h12a2 2 0 012 2v10a2 2 0 01-2 2H6a2 2 0 01-2-2V8a2 2 0 012-2z" stroke="currentColor" stroke-width="1.5"/><path d="M9 14l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <button type="button" class="map-toggle">
+                <span class="map-toggle-text">
+                  <h4>Resolución de problemas</h4>
+                  <span>Foco &amp; eficiencia</span>
+                </span>
+                <span class="map-chevron"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </button>
+              <div class="map-body">
+                <p>Me enfoco en encontrar soluciones eficientes e innovadoras.</p>
+              </div>
+            </div>
+ 
+            <div class="map-point reveal d3" data-map-point>
+              <div class="map-node">
+                <span class="map-index">3</span>
+                <svg viewBox="0 0 24 24" fill="none"><circle cx="8" cy="9" r="3" stroke="currentColor" stroke-width="1.5"/><circle cx="17" cy="9" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M2 20c0-3 2.7-5 6-5s6 2 6 5M13 20c0-2.6 2-5 5-5s5 2.4 5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </div>
+              <button type="button" class="map-toggle">
+                <span class="map-toggle-text">
+                  <h4>Trabajo en equipo</h4>
+                  <span>Colaboración &amp; comunicación</span>
+                </span>
+                <span class="map-chevron"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </button>
+              <div class="map-body">
+                <p>Creo que las mejores ideas nacen de la colaboración y la comunicación.</p>
+              </div>
+            </div>
+ 
+            <div class="map-point reveal d4" data-map-point>
+              <div class="map-node">
+                <span class="map-index">4</span>
+                <svg viewBox="0 0 24 24" fill="none"><path d="M8 9l-4 3 4 3M16 9l4 3-4 3M13 5l-2 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <button type="button" class="map-toggle">
+                <span class="map-toggle-text">
+                  <h4>Tecnología &amp; ciberseguridad</h4>
+                  <span>Innovación &amp; IA</span>
+                </span>
+                <span class="map-chevron"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </button>
+              <div class="map-body">
+                <p>Ciberseguridad, desarrollo, innovación e IA &amp; automatización son los ejes que sigo de cerca dentro del mundo tech.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+ 
+        <!-- PROYECTO ALEXEYTECHSEC -->
+        <div class="social-project">
+          <p class="eyebrow" style="text-align:left;margin-bottom:8px;">Proyecto personal</p>
+          <h3 style="font-size:24px;">AlexeyTechSec</h3>
+ 
+          <div class="social-project-grid">
+            <div class="social-project-info">
+              <p class="social-project-desc">
+                Además de mi trabajo en desarrollo y ciberseguridad, dirijo <strong>AlexeyTechSec</strong>,
+                un espacio donde comparto de forma clara y cercana noticias, herramientas y curiosidades
+                del mundo de la ciberseguridad y la tecnología, acercando conceptos técnicos a cualquier
+                persona sin perder el rigor.
+              </p>
+              <ul class="social-highlights">
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Contenido sobre ciberseguridad, herramientas y tendencias tech
+                </li>
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Explicaciones pensadas para cualquier nivel, sin tecnicismos innecesarios
+                </li>
+                <li>
+                  <svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Presencia activa en Instagram, TikTok y YouTube
+                </li>
+              </ul>
+            </div>
+ 
+            <div class="device-mockup reveal d2">
+              <div class="device-screen">
+                <div class="device-bar">
+                  <span class="device-dot"></span><span class="device-dot"></span><span class="device-dot"></span>
+                  <span class="device-url">alexeytechsec</span>
+                </div>
+                <div class="device-content">
+                  <a class="device-row" href="https://www.instagram.com/alexeytechsec/" target="_blank" rel="noopener">
+                    <span class="device-row-icon"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.5"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor"/></svg></span>
+                    <span class="device-row-text"><strong>Instagram</strong><span>@alexeytechsec</span></span>
+                    <span class="device-row-arrow"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H8M17 7V16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                  </a>
+                  <a class="device-row" href="https://www.tiktok.com/@alexeytechsec" target="_blank" rel="noopener">
+                    <span class="device-row-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M14 3v10.5a3.5 3.5 0 11-3.5-3.5c.35 0 .68.05 1 .14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 3c.4 2.2 2 3.8 4 4.2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                    <span class="device-row-text"><strong>TikTok</strong><span>@alexeytechsec</span></span>
+                    <span class="device-row-arrow"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H8M17 7V16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                  </a>
+                  <a class="device-row" href="https://www.youtube.com/@AlexeyTechSec" target="_blank" rel="noopener">
+                    <span class="device-row-icon"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5.5" width="18" height="13" rx="4" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 9.5l5 2.5-5 2.5v-5z" fill="currentColor"/></svg></span>
+                    <span class="device-row-text"><strong>YouTube</strong><span>@AlexeyTechSec</span></span>
+                    <span class="device-row-arrow"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H8M17 7V16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                  </a>
+                </div>
+              </div>
+              <div class="device-stand"></div>
+              <div class="device-base"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- CONTACTO -->
+  <section id="contacto">
+    <div class="wrap">
+      <div class="panel reveal">
+        <span class="panel-corner tl"></span><span class="panel-corner br"></span>
+        <div class="contact-wrap">
+          <p class="eyebrow">Contacto</p>
+          <h2>Hablemos</h2>
+          <p>¿Tienes un proyecto en mente o quieres colaborar? Escríbeme directamente por cualquiera de estos canales, ¡me encantaría saber de ti!</p>
+          <div class="social-grid">
+            <a href="mailto:contactalexeytenllado@gmail.com" class="social-card">
+              <div class="social-icon"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 6 9-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+              <div><h5>Email</h5><span>contactalexeytenllado@gmail.com</span></div>
+            </a>
+            <a href="https://www.linkedin.com/in/alexey-tenllado-le%C3%B3n-1a496135a/" target="_blank" rel="noopener" class="social-card">
+              <div class="social-icon"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="M7 10v6M7 7v.01M11 16v-4c0-1.5 1-2.5 2.5-2.5S16 10.5 16 12v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+              <div><h5>LinkedIn</h5><span>Alexey Tenllado León</span></div>
+            </a>
+            <a href="https://www.instagram.com/alexeytechsec/" target="_blank" rel="noopener" class="social-card">
+              <div class="social-icon"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.5"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor"/></svg></div>
+              <div><h5>Instagram</h5><span>@alexeytechsec</span></div>
+            </a>
+            <a href="https://www.tiktok.com/@alexeytechsec" target="_blank" rel="noopener" class="social-card">
+              <div class="social-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M14 3v10.5a3.5 3.5 0 11-3.5-3.5c.35 0 .68.05 1 .14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 3c.4 2.2 2 3.8 4 4.2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <div><h5>TikTok</h5><span>@alexeytechsec</span></div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+</main>
+ 
+<footer>
+  <div class="logo"><span class="logo-mark">>_</span>ALEXEY TENLLADO LEÓN</div>
+  <p>© 2026 Alexey Tenllado León.</p>
+</footer>
+ 
+<script>
+/* ---------- Canvas network background ---------- */
+const canvas = document.getElementById('network-bg');
+const ctx = canvas.getContext('2d');
+let w, h, particles;
+const PCOUNT = 70;
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+ 
+function resize(){
+  w = canvas.width = window.innerWidth;
+  h = canvas.height = document.documentElement.scrollHeight;
+}
+function initParticles(){
+  particles = Array.from({length: PCOUNT}, () => ({
+    x: Math.random()*w,
+    y: Math.random()*h,
+    vx: (Math.random()-.5)*.25,
+    vy: (Math.random()-.5)*.25,
+    r: Math.random()*1.6+.6
+  }));
+}
+function step(){
+  ctx.clearRect(0,0,w,h);
+  const viewTop = window.scrollY - 200;
+  const viewBottom = window.scrollY + window.innerHeight + 200;
+  for(const p of particles){
+    if(!reduceMotion){
+      p.x += p.vx; p.y += p.vy;
+      if(p.x<0||p.x>w) p.vx*=-1;
+      if(p.y<0||p.y>h) p.vy*=-1;
+    }
+  }
+  for(let i=0;i<particles.length;i++){
+    const p = particles[i];
+    if(p.y<viewTop||p.y>viewBottom) continue;
+    for(let j=i+1;j<particles.length;j++){
+      const q = particles[j];
+      if(q.y<viewTop||q.y>viewBottom) continue;
+      const dx=p.x-q.x, dy=p.y-q.y;
+      const dist = Math.sqrt(dx*dx+dy*dy);
+      if(dist<130){
+        ctx.strokeStyle = `rgba(96,165,250,${(1-dist/130)*.15})`;
+        ctx.lineWidth=1;
+        ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.stroke();
+      }
+    }
+    ctx.fillStyle='rgba(96,165,250,.55)';
+    ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();
+  }
+  requestAnimationFrame(step);
+}
+resize(); initParticles(); requestAnimationFrame(step);
+window.addEventListener('resize', ()=>{resize();});
+window.addEventListener('load', ()=>{resize();});
+ 
+/* ---------- Header scroll state ---------- */
+const headerEl = document.getElementById('siteHeader');
+window.addEventListener('scroll', ()=>{
+  headerEl.classList.toggle('scrolled', window.scrollY>20);
+});
+ 
+/* ---------- Scroll reveal ---------- */
+const revealEls = document.querySelectorAll('.reveal:not(.in)');
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+  });
+},{threshold:.15});
+revealEls.forEach(el=>io.observe(el));
+ 
+/* ---------- Skill level bars fill on view ---------- */
+const bars = document.querySelectorAll('.skillbar-row[data-level]');
+const barIo = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const level = parseInt(e.target.dataset.level, 10) || 0;
+      const segments = e.target.querySelectorAll('.level-bar i');
+      segments.forEach((seg, i)=>{
+        if(i < level){
+          setTimeout(()=>seg.classList.add('filled'), i*70);
+        }
+      });
+      barIo.unobserve(e.target);
+    }
+  });
+},{threshold:.4});
+bars.forEach(b=>barIo.observe(b));
+ 
+/* ---------- Nav scrollspy ---------- */
+const sections = document.querySelectorAll('main section[id]');
+const navA = document.querySelectorAll('.navlinks a');
+ 
+function setActive(id){
+  navA.forEach(a=>a.classList.toggle('active', a.getAttribute('href')==='#'+id));
+}
+const spyIo = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting) setActive(e.target.id);
+  });
+},{rootMargin:'-45% 0px -45% 0px'});
+sections.forEach(s=>spyIo.observe(s));
+ 
+/* ---------- Mapa de Intereses & Valores: puntos desplegables ---------- */
+const mapPoints = document.querySelectorAll('[data-map-point]');
+mapPoints.forEach(point=>{
+  const toggle = point.querySelector('.map-toggle');
+  toggle.addEventListener('click', ()=>{
+    point.classList.toggle('open');
+  });
+});
+/* Abre el primer punto por defecto una vez que entra en pantalla */
+if(mapPoints[0]){
+  const firstPointIo = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.classList.add('open');
+        firstPointIo.unobserve(e.target);
+      }
+    });
+  },{threshold:.5});
+  firstPointIo.observe(mapPoints[0]);
+}
+ 
+/* ---------- Mobile nav toggle ---------- */
+const navToggle = document.getElementById('navToggle');
+const navlinks = document.getElementById('navlinks');
+navToggle.addEventListener('click', ()=>{
+  const open = navlinks.style.display==='flex';
+  navlinks.style.display = open ? 'none' : 'flex';
+  navlinks.style.cssText += open ? '' : 'position:absolute;top:60px;left:0;right:0;flex-direction:column;background:rgba(5,8,16,.97);padding:16px 24px;gap:2px;border-bottom:1px solid rgba(96,165,250,.2);';
+});
+navA.forEach(a=>a.addEventListener('click', ()=>{
+  if(window.innerWidth<=860) navlinks.style.display='none';
+}));
+</script>
+</body>
+</html>
